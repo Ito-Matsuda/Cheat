@@ -1,0 +1,39 @@
+General Rules to Cheat / Bullshit / I Doubt it
+	
+	First Player plays any card(s)* they want (this will / should not be challenged / unecessary risk)
+	Second player MUST play a card(s)* that is either one higher or one lower 
+		It is at this point where the game begins
+			Second player can "lie" about the card(s) they put down
+			Any other player can call "bullshit" and if P2 was lying, P2 picks up all the cards on the stack
+				If P2 was not lying, the player who called them out must pick up all the cards on the stack
+	Game will continue until there are only 2 or 3 players left (it becomes too hard to "bullshit")
+
+	Default will be 7 players
+
+* The player can play any number of the same kind of cards 
+
+Code Implementation
+
+Objects
+	Object 1 --> Player object
+				 2 Attributes
+				 1) An array of the "card" objects that represents the player's hand.
+				 2) A sort of "memory" about which cards have been played should only be about 3 or 4 unique cards long
+
+	Object 2 --> Card object
+				 Has 2 attributes 
+				 1) A number indicating the type
+				 2) A string indicating the Suit
+				 	Maybe change this to a number indicating suit
+Methods
+	Method 1 --> main, asks how many players (up to 10) that
+	 there will be, will then call the generatePlayers function
+
+	 Method 2 --> generatePlayers, based on number provided by main, will generate each players' decks
+	 After succesfully doing so, will go to the next function that controls the flow of the game
+
+	 Method 3 -->  controlFlow, will probably be a recursive call where the base case is 3 or 2 player left remaining
+	 	Takes in (int numberLeft)
+
+Testing
+	Tests of each method as it is coded will be done
