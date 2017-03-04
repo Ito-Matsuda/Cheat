@@ -21,6 +21,30 @@ private int memory[][] = new int[3][2];
 	hand = (ArrayList<cards>)(Arrays.asList(handedOut)); // Cast it
 	// Memory has nothing at this point
 	}
+	
+	// Functions that help visualize what's going on right below
+	/**
+	 * Prints the cards
+	 */
+	public void printCards(){
+		cards currentCard;
+		for(int i = 0; i < hand.size(); i++){
+			currentCard = hand.get(i);
+			currentCard.printCardDetails();
+		}
+	} // End printCards
+	
+	/**
+	 * Prints what you have in memory
+	 */
+	public void printMemory(){
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 2; j++){
+				System.out.print(memory[i][j] + ":");
+			}
+			System.out.println(""); // Change it to newline
+		}
+	} // End printMemory
 
 	/**
 	 * Adds a card to the players hand
@@ -114,8 +138,24 @@ private int memory[][] = new int[3][2];
 				}
 			}
 		} // End cardFound == false
-		// Add a function call to something that checks the cards in memory 
-		// Checks if anything is fishy, if so, return false or something to call bullshit
 	} // End addCardMemory
+	
+	/**
+	 * This is called after every addCardMemory function
+	 * Will check the player's memory to see if there are any possible contradictions 
+	 * with the card just played. Does this by looking at the counts of each card in memory
+	 * @return True if there was no contradiction found, false if fishy
+	 */
+	public boolean checkMemory(){
+		for (int i = 0; i < 3; i++){
+			if (memory[i][1] >4){
+				System.out.println("Imma call bs on that boiii");
+				return false;
+				// Call em out on it
+			}
+		}
+		// Nothing of importance was found
+		return true; 
+	} // End checkMemory
 	
 } // End class player
