@@ -37,7 +37,7 @@ public class game {
 		// use addCard funct in player
 		cards cardsHanded[] = new cards[cardsEach];
 		int theCard;
-		int whatSuit;
+		int determineSuit;
 		// The empty array of cards to give to each player
 		for (int j = 0; j < 7; j++) { // the 7 is temporary for 7 players
 			for (int i = 0; i < number; i++){
@@ -45,41 +45,27 @@ public class game {
 				theCard = randomInt(0,52);
 				if((theCard / 13.0) > 3){
 					cardsHanded[i].setSuit(3);
-					whatSuit = 3;
+					determineSuit = 3;
 					System.out.println("Set the suit to Spades");
 				}
 				else if ((theCard / 13.0) > 2){
 					cardsHanded[i].setSuit(2);
-					whatSuit = 2;
+					determineSuit = 2;
 					System.out.println("Set the suit to Hearts");
 				}
 				else if ((theCard / 13.0) > 1){
 					cardsHanded[i].setSuit(1);
-					whatSuit = 1;
+					determineSuit = 1;
 					System.out.println("Set the suit to diamond");
 				}
 				else {
 					cardsHanded[i].setSuit(0);
-					whatSuit = 0;
+					determineSuit = 0;
 					System.out.println("Set the suit to clubs");
 				}
 				System.out.println("Finished setting the suit");
-				if(whatSuit == 0){
-					cardsHanded[i].setNumber(theCard); // Generated a 1 or 13 or w/e
-					System.out.println("Set " + theCard + " as the number");
-				}
-				else if (whatSuit == 1){
-					cardsHanded[i].setNumber(theCard-13);
-					System.out.println("Set " + (theCard-13) + " as the number");
-				}
-				else if (whatSuit == 2){
-					cardsHanded[i].setNumber(theCard-26);
-					System.out.println("Set " + (theCard-26) + " as the number");
-				}
-				else{
-					cardsHanded[i].setNumber(theCard-39);
-					System.out.println("Set " + (theCard-39) + " as the number");
-				}
+				cardsHanded[i].setNumber(theCard - (determineSuit*13));
+				System.out.println("Set the number as " + (theCard - (determineSuit*13)));
 			}
 		playerz[j] = new player(cardsHanded); // Make em 
 		Arrays.fill(cardsHanded, null); 
