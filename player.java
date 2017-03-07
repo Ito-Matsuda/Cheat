@@ -22,6 +22,43 @@ private int memory[][] = new int[3][2];
 	// Memory has nothing at this point
 	}
 	
+	/**
+	 * Used to check the status of the player hands
+	 * @return True if the hand is empty, false if not
+	 */
+	public boolean checkHand(){
+		if (hand.isEmpty()){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param lastCardOnPile The card they have to match
+	 * @return The card they wish to place
+	 */
+	public cards placeACard(int lastCardOnPile){
+		cards theCard;
+		int i = 0;
+		while(i<hand.size()){
+			theCard = hand.get(i); // Get the card
+			if(Math.abs(theCard.getNumber()-lastCardOnPile) == 1){
+				// If the card is either one up or one down from the thing
+				System.out.println("Player places card " + theCard.getNumber());
+				return theCard; // To be used in game.java 
+			}
+			i++;
+		}
+		/*
+		 *  If you can't find a card that is one less or one greater
+		 *  You don't have a choice but to bullshit it
+		 *  TODO
+		 *  I would imagine you would want to get rid of a card for which
+		 *  You don't have dupes for but that can be added later
+		 */
+		return hand.get(i); // Return some BS card the last one
+	} // End placeACard
 	// Functions that help visualize what's going on right below
 	/**
 	 * Prints the cards

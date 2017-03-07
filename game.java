@@ -5,6 +5,8 @@
  * TODO -> After everything is finished, or when it needs to, optimize the randomInt
  * 		   Function as it may take a while to do
  * 		-> Could do hashing I suppose
+ * 		-> Implement placing doubles (as of right now only places singles)
+ * 		-> A couple of other "todos" are in the player.java file
  */
 import java.util.*;
 public class game {
@@ -18,11 +20,17 @@ public class game {
 	 * ace of clubs is 0, 2 of clubs is 1,
 	 * So formula is 13*SuitCode + cardNumber 
 	*/
-    static player playerz[] = new player[7]; // just keep at max of 7 
-	public static void main(String[] args) {
+    static player playerz[] = new player[7]; // Just keep at max of 7 
+	static Stack<cards> cardStack = new Stack<cards>(); 
+	// The cards on the stack (people placing cards)
+	// Declare the stack as type cards
+	static boolean gameFinished = false;
+    
+    public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("Enter in number of players: ");
-		//generatePlayers(7); // For now will be tested with 7
+		// generatePlayers(7); // For now will be tested with 7
+		// goThroughTurns();
 	}
 	
 	/**
@@ -71,7 +79,7 @@ public class game {
 		Arrays.fill(cardsHanded, null); 
 		// Completely reset the cardsHanded array as we will used them again
 		} // End the outer loop
-	}
+	} // End generatePlayers
 	
 	/**
 	 * Generates a random number given a max and a min
@@ -92,6 +100,67 @@ public class game {
 		// OPTIMIZE LATER, this is just a proof of concept, so it just has to work
 		usedCards[randomNum] = 1;// The array now has something in it and that index is used
 		return randomNum;
-	}
+	} // End randomInt
 
-}
+	/**
+	 * Goes through all the turns until the game ends
+	 */
+	public static void goThroughTurns(){
+		while(!gameFinished){ // while game is not finished
+			// place card on stack
+			// check if anyone won 
+			// check if anyone calls bull
+				// check pile if so
+					// if bull player who put gets whopped
+					// if not then that person who calls it get whopped
+			// else go to next player and end up at gameFinished again
+		}
+	} // End goThroughTurns
+	
+	/**
+	 * Used to place the card on the stack
+	 * @param whichPlayer the player whose making their move
+	 */
+	public static void placeCard(int whichPlayer){
+		
+	} // End whichPlayer
+	/**
+	 * This would be called after checkMemory from player thing
+	 * @param theCard The "card" that was placed down
+	 * @return False if the person lied about the card
+	 * 			True if the person did not lie
+	 */
+	public static boolean checkPile(cards theCard){
+		cards topCard = cardStack.pop(); // Get the card that was put down
+		if (topCard.getNumber() == theCard.getNumber()){
+			return true;
+		}
+		return false;
+	} // End checkPile
+	
+	/**
+	 * Used to see if a player has won
+	 * @param whichPlayer check to see if that player won
+	 * @return False if no win, true if win
+	 */
+	public static boolean checkWin(int whichPlayer){
+		if (playerz[whichPlayer].checkHand() == true){
+			System.out.println("Player " + whichPlayer + " has emptied their hand!");
+			return true;
+		}
+		return false;
+	} // End checkWin
+	
+	/**
+	 * Used when one player gets whooped, IE) when someone has to pick up all the cards
+	 * Called eventually after checkPile
+	 * @param whichPlayer The player that got cheesed
+	 */
+	public static void getWhopped(int whichPlayer){
+		cards theCard;
+		while(!cardStack.empty()){ // While it isn't empty
+			theCard = cardStack.pop(); // Get the card
+			playerz[whichPlayer].addCard(theCard); // Add the card to the players hand
+		}
+	} // End getWhopped
+} // End game.java
