@@ -22,6 +22,16 @@ private int memory[][] = new int[3][2];
 	// Memory has nothing at this point
 	}
 	
+	public void setHand(cards handedOut[]){
+	hand = (ArrayList<cards>)(Arrays.asList(handedOut));
+	}
+	/**
+	 * Return number of cards  in the hand 
+	 * @return
+	 */
+	public int handSize(){
+		return hand.size();
+	}
 	/**
 	 * Used to check the status of the player hands
 	 * @return True if the hand is empty, false if not
