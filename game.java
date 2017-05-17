@@ -37,13 +37,33 @@ public class game {
     
     public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("Enter in number of players: ");
+		//System.out.println("Enter in number of players: ");
 		//generatePlayers(7); // For now will be tested with 7
-		cards cardPlaced = playerz[0].placeACard(6); // This really doesnt matter
+		generateHand(7);
+		tester();
+		//cards cardPlaced = playerz[0].placeACard(6); // This really doesnt matter
 		// ^ Person has to place the first card
-		goThroughTurns();
+		//goThroughTurns();
     }
 	
+    /**
+     * FOLLOWING IS CHECK FOR GETTING RID OF NULLPOINTER
+     */
+    public static void generateSinglePlayer(){
+    	player genPlayer = new player(0); 
+    }
+    /**
+     * END NULL POINTER SHENANIGANS
+     */
+    
+    /*
+     * Used to check output and values 
+     */
+    public static void tester(){
+    	for (int i = 0; i < 7; i++){
+    		playerz[i].printCards();
+    	}
+    }
 	
 	/**
 	 * Optimization of previous generatePlayers method
@@ -54,7 +74,7 @@ public class game {
 	 * @param number
 	 */
 	public static void generateHand(int number){
-		int cardsEach = (52/number); // May end up giving more cards than intended
+		int cardsEach = (52/number); // for 7, gives 7 each (3 cards left unassigned)
 		int playerAt = 0; // give em out to player 0 first, goes to 6
 		cards tempCard = generateSingleCard(42); // To be changed later
 		int size = 52; // Standard number of cards in a deck
@@ -66,64 +86,28 @@ public class game {
         Random rand = new Random();
         while(list.size() > 0) { // While there are cards to be handed
         	// Condition to check if playerAt has enough cards
-        	if (playerz[playerAt].handSize() == cardsEach){
+        	// Line directly below causes a NullPointerException
+        	if (playerz[playerAt].handSize() == cardsEach +1){
+        		// TODO ABOVE
+        		// +1 because I give every player a "zero" card in the player class
         		System.out.println("Finished handing cards to player " + playerAt);
         		playerAt++; // Move to the next player
         		System.out.println("Now moving onto player "+ playerAt);
         	}
-            int index = rand.nextInt(list.size()); // Pick a random number
-            // Generate the card, and put it into person's hand
-            tempCard = generateSingleCard(index); // Create the card
-            playerz[playerAt].addCard(tempCard); // Add it to the hand
-            list.remove(index); // Remove the card so it wont be chosen
+        	else{
+        		int index = rand.nextInt(list.size()); // Pick a random number
+            	// Generate the card, and put it into person's hand
+            	tempCard = generateSingleCard(index); // Create the card
+            	playerz[playerAt].addCard(tempCard); // Add it to the hand
+            	list.remove(index); // Remove the card so it wont be chosen
+        	}
         }
-	}
+	} // End generateHand
 	
 	public static cards generateSingleCard(int theCard) {
 		cards card = new cards(theCard);
 		return card;
 	}
-	/**
-	 * Generates a random number given a max and a min
-	 * USED SOLEY FOR CARD GENERATION
-	 * Exact same code from Auto-Avalon
-	 * @param min The lowest number // do not use this 
-	 * @param max The highest number
-	 * @return
-	 */
-	public static int randomCard(int min, int max) {
-		Random rand = new Random();
-		int randomNum;
-		// We need it to execute at least once
-		do {
-			randomNum = rand.nextInt((max - min) + 1) + min;
-			//System.out.println("Generated " + randomNum);
-		} while (usedCards[randomNum] != 0); 
-		// While you have not found something taken up
-		// Super inefficient (it's like random sort lol)
-		// OPTIMIZE LATER, this is just a proof of concept, so it just has to work
-		
-		/*
-		 * Generating Random numbers with no duplicates
-		 * Taken from 
-		 * -->  http://stackoverflow.com/questions/4040001/creating-random-numbers-with-no-duplicates
-		 * Solution is Catchwa's 
-		 */
-//		 int size = max;
-//	        ArrayList<Integer> list = new ArrayList<Integer>(size);
-//	        for(int i = 1; i <= size; i++) {
-//	            list.add(i); 
-//	            // Create a list filled with all the numbers 
-//	            // In our case, from 1 - 52 (represents the cards) 
-//	        }
-//	        Random rand = new Random();
-//	        while(list.size() > 0) {
-//	            int index = rand.nextInt(list.size());
-//	            System.out.println("Selected: "+list.remove(index));
-//	        }
-		usedCards[randomNum] = 1;// The array now has something in it and that index is used
-		return randomNum;
-	} // End randomCard
 
 	/**
 	 * Goes through all the turns until the game ends

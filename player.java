@@ -3,6 +3,7 @@ public class player {
 	
 private ArrayList<cards> hand = new ArrayList<cards>();
 private int memory[][] = new int[3][2];
+private int sizeHand;
 // memory is a 3x2 representing how many cards of a certain suit has been played
 // ex in [1][1] is which number (like 11 for Jack) and [1][2] is number of Jacks seen
 // You keep track of at most 3 cards at a time
@@ -16,20 +17,56 @@ private int memory[][] = new int[3][2];
 	 * Constructor used in beginning of the game, used to hand out cards to players
 	 * @param handedOut The list of cards to give to this player
 	 */
-	public player (cards handedOut[]){
-	// Builds the player's hand based on cards handed out
-	hand = (ArrayList<cards>)(Arrays.asList(handedOut)); // Cast it
-	// Memory has nothing at this point
+/*
+	public player (int initNumCards){
+		// Test this needs to be empty at the beginning
+		// Builds the player's hand based on cards handed out
+		setHand(initNumCards);
+		setMemory();
+		setHandSize();
+		// Memory has nothing at this point
 	}
 	
-	public void setHand(cards handedOut[]){
-	hand = (ArrayList<cards>)(Arrays.asList(handedOut));
+	public void setHand(int initNumCards){
+		cards handedOut[] = new cards [1];
+		handedOut[0].setNumber(0); // Instatiate it? 
+		hand = (ArrayList<cards>)(Arrays.asList(handedOut));
 	}
+	*/	
+
+
+	/**
+	 * Constructor used in beginning of the game, used to hand out cards to players
+	 * @param handedOut The list of cards to give to this player
+	 */
+	public player (){
+		// Test this needs to be empty at the beginning
+		// Builds the player's hand based on cards handed out
+		setHand();
+		setMemory();
+		setHandSize();
+		// Memory has nothing at this point
+	}
+	
+	public void setHand(){
+		hand = (ArrayList<cards>)(Arrays.asList(0));
+	}
+	
+	public void setMemory(){
+		Arrays.fill(memory, 0); // Everything is a zero
+	}
+	
+	public void setHandSize() {
+		sizeHand = 0;
+	}
+	
+	
 	/**
 	 * Return number of cards  in the hand 
 	 * @return
 	 */
 	public int handSize(){
+		System.out.println("Size of hand " + hand.size());
 		return hand.size();
 	}
 	/**

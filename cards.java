@@ -1,6 +1,10 @@
 
 public class cards {
 // Attribute declaration
+// This class is actually useless as we just get details from the player and game class
+	// At this point it makes it more complicated to use this as a class for a set of cards
+	// That are just numbers
+
 private int number; 
 // Ace = 1, 2 = 2 ... Jack = 11, Queen = 12, King = 13
 //private int suit; 
