@@ -30,7 +30,7 @@ public class game {
 	 * So formula is 13*SuitCode + cardNumber 
 	*/
     static player playerz[] = new player[7]; // Just keep at max of 7 
-	static Stack<cards> cardStack = new Stack<cards>(); 
+	static Stack<Integer> cardStack = new Stack<Integer>(); 
 	// The cards on the stack (people placing cards)
 	// Declare the stack as type cards
 	static boolean gameFinished = false;
@@ -76,7 +76,7 @@ public class game {
 	public static void generateHand(int number){
 		int cardsEach = (52/number); // for 7, gives 7 each (3 cards left unassigned)
 		int playerAt = 0; // give em out to player 0 first, goes to 6
-		cards tempCard = generateSingleCard(42); // To be changed later
+		int tempCard = 42; // To be changed later
 		int size = 52; // Standard number of cards in a deck
         ArrayList<Integer> list = new ArrayList<Integer>(size);
         for(int i = 1; i <= size; i++) {
@@ -97,17 +97,19 @@ public class game {
         	else{
         		int index = rand.nextInt(list.size()); // Pick a random number
             	// Generate the card, and put it into person's hand
-            	tempCard = generateSingleCard(index); // Create the card
+            	tempCard = index; // Create the card
             	playerz[playerAt].addCard(tempCard); // Add it to the hand
             	list.remove(index); // Remove the card so it wont be chosen
         	}
         }
 	} // End generateHand
 	
-	public static cards generateSingleCard(int theCard) {
-		cards card = new cards(theCard);
-		return card;
-	}
+//	public static cards generateSingleCard(int theCard) {
+//		cards card = new cards(theCard);
+//		int card 
+//		return card;
+//	}
+	// This is useless
 
 	/**
 	 * Goes through all the turns until the game ends
@@ -144,13 +146,13 @@ public class game {
 	 * @param whichPlayer the player whose making their move
 	 */
 	public static void placeCard(int whichPlayer){
-		int cardNumber = cardStack.peek().getNumber(); // Get the last put number on the pile lmao @.peek()
+		int cardNumber = cardStack.peek(); // Get the last put number on the pile lmao @.peek()
 		int whoseMemory; // Who will call out the bullshit or not
-		cards cardPlaced = playerz[whichPlayer].placeACard(cardNumber);
+		int cardPlaced = playerz[whichPlayer].placeACard(cardNumber);
 		// add it to everyone's memory
 		// ^IMPORTANT -imagine if player called bs on their own thing
 		for (int i = 0; i < playerz.length; i++){
-			playerz[i].addCardMemory(cardPlaced.getNumber());
+			playerz[i].addCardMemory(cardPlaced);
 			// Add the 8 or whatever to memory
 		}
 		// call the check memory thing for everyone (kinda redundant as everyone has the same memory)
@@ -183,9 +185,9 @@ public class game {
 	 * @return False if the person lied about the card
 	 * 			True if the person did not lie
 	 */
-	public static boolean checkPile(cards theCard){
-		cards topCard = cardStack.pop(); // Get the card that was put down
-		if (topCard.getNumber() == theCard.getNumber()){
+	public static boolean checkPile(int theCard){
+		int topCard = cardStack.pop(); // Get the card that was put down
+		if (topCard == theCard){
 			return true;
 		}
 		return false;
@@ -210,7 +212,7 @@ public class game {
 	 * @param whichPlayer The player that got cheesed
 	 */
 	public static void getWhopped(int whichPlayer){
-		cards theCard;
+		int theCard;
 		while(!cardStack.empty()){ // While it isn't empty
 			theCard = cardStack.pop(); // Get the card
 			playerz[whichPlayer].addCard(theCard); // Add the card to the players hand
