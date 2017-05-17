@@ -1,7 +1,7 @@
 import java.util.*;
 public class player {
 	
-private ArrayList<cards> hand = new ArrayList<cards>();
+private ArrayList<Integer> hand = new ArrayList<Integer>();
 private int memory[][] = new int[3][2];
 private int sizeHand;
 // memory is a 3x2 representing how many cards of a certain suit has been played
@@ -49,7 +49,8 @@ private int sizeHand;
 	}
 	
 	public void setHand(){
-		hand = (ArrayList<cards>)(Arrays.asList(0));
+		hand = (ArrayList<Integer>)(Arrays.asList(0));
+		// Just a single card with value 0 
 	}
 	
 	public void setMemory(){
@@ -85,14 +86,14 @@ private int sizeHand;
 	 * @param lastCardOnPile The card they have to match
 	 * @return The card they wish to place
 	 */
-	public cards placeACard(int lastCardOnPile){
-		cards theCard;
+	public int placeACard(int lastCardOnPile){
+		int theCard;
 		int i = 0;
 		while(i<hand.size()){
 			theCard = hand.get(i); // Get the card
-			if(Math.abs(theCard.getNumber()-lastCardOnPile) == 1){
+			if(Math.abs(theCard-lastCardOnPile) == 1){
 				// If the card is either one up or one down from the thing
-				System.out.println("Player places card " + theCard.getNumber());
+				System.out.println("Player places card " + theCard);
 				return theCard; // To be used in game.java 
 			}
 			i++;
@@ -111,10 +112,10 @@ private int sizeHand;
 	 * Prints the cards
 	 */
 	public void printCards(){
-		cards currentCard;
+		int currentCard;
 		for(int i = 0; i < hand.size(); i++){
 			currentCard = hand.get(i);
-			currentCard.printCardDetails();
+			//currentCard.printCardDetails();
 		}
 	} // End printCards
 	
@@ -134,7 +135,7 @@ private int sizeHand;
 	 * Adds a card to the players hand
 	 * @param cardToAdd The card to add 
 	 */
-	public void addCard(cards cardToAdd){
+	public void addCard(int cardToAdd){
 		hand.add(cardToAdd); // Append to end of list
 	}
 	
@@ -142,7 +143,7 @@ private int sizeHand;
 	 * Removes a card from the players hand
 	 * @param theCard The card to take away
 	 */
-	public void removeCard(cards theCard){
+	public void removeCard(int theCard){
 		hand.remove(theCard);
 	}
 	
